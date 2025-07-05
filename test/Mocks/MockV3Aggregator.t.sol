@@ -1,5 +1,6 @@
+//SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
 import {MockV3Aggregator} from "lib/chainlink-brownie-contracts/contracts/src/v0.8/tests/MockV3Aggregator.sol";
-import {AggregatorV3Interface} from "lib/chainlink-brownie-contracts/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 
 contract MockV3AggregatorTest is MockV3Aggregator {
     constructor(

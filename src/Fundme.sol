@@ -5,7 +5,7 @@ import {AggregatorV3Interface} from "lib/chainlink-brownie-contracts/contracts/s
 
 contract Fundme {
     using PriceConverter for uint256;
-    address immutable i_owner;
+    address private immutable i_owner;
     AggregatorV3Interface public immutable i_priceFeed;
     mapping(address => uint256) s_funds;
 
@@ -21,7 +21,7 @@ contract Fundme {
 
     modifier minimumAmount() {
         require(
-            msg.value.getConversionRate(i_priceFeed) >= 1 ether,
+            msg.value.getConversionRate(i_priceFeed) >= 0.5 ether,
             "Min 1 ether required to fund "
         );
         _;
@@ -29,5 +29,11 @@ contract Fundme {
 
     function startfundMe() external payable minimumAmount {
         s_funds[msg.sender] += msg.value;
+    }
+
+    receive() external payable {}
+
+    function getOwner() external view returns (address) {
+        return i_owner;
     }
 }
