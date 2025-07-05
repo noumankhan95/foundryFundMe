@@ -9,8 +9,8 @@ contract Fundme {
     AggregatorV3Interface public immutable i_priceFeed;
     mapping(address => uint256) s_funds;
 
-    constructor(address _owner, AggregatorV3Interface _priceFeed) {
-        i_owner = _owner;
+    constructor(AggregatorV3Interface _priceFeed) {
+        i_owner = msg.sender;
         i_priceFeed = AggregatorV3Interface(_priceFeed);
     }
 
