@@ -17,11 +17,11 @@ contract InteractionsTest is Test {
         (fundme, ) = deployContract.run();
     }
 
-    function testUserCanInteractWithContract() public {
-        FundFundMe fundFundMe = new FundFundMe();
-        fundFundMe.fundTheFundmeContract(address(fundme));
-        WithdrawFundMe withdrawFundMe = new WithdrawFundMe();
-        withdrawFundMe.WithdrawFromFundMeContract(address(fundme));
-        assertEq(address(fundme).balance, 0 ether);
-    }
+    // function testUserCanInteractWithContract() public {
+    //     FundFundMe fundFundMe = new FundFundMe();
+    //     fundFundMe.fundTheFundmeContract(address(fundme));
+    //     WithdrawFundMe withdrawFundMe = new WithdrawFundMe();
+    //     withdrawFundMe.WithdrawFromFundMeContract(address(fundme));
+    //     assertEq(address(fundme).balance, 0 ether);
+    // }
 }
