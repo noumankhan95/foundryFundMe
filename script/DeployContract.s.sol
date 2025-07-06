@@ -7,7 +7,7 @@ import {AggregatorV3Interface} from "lib/chainlink-brownie-contracts/contracts/s
 
 contract DeployContract is Script {
     function deployFundMe()
-        public
+        internal
         returns (Fundme fundme, HelperConfig helperConfig)
     {
         helperConfig = new HelperConfig();
@@ -15,7 +15,6 @@ contract DeployContract is Script {
         fundme = new Fundme(
             AggregatorV3Interface(helperConfig.getConfig().priceFeed)
         );
-
         vm.stopBroadcast();
     }
 

@@ -8,6 +8,7 @@ contract Fundme {
     address private immutable i_owner;
     AggregatorV3Interface public immutable i_priceFeed;
     mapping(address => uint256) s_funds;
+    address[] s_funders;
 
     constructor(AggregatorV3Interface _priceFeed) {
         i_owner = msg.sender;
@@ -29,6 +30,16 @@ contract Fundme {
 
     function startfundMe() external payable minimumAmount {
         s_funds[msg.sender] += msg.value;
+    }
+
+    function withdraw() external payable onlyOwner {
+        address[] memory funders = s_funders;
+        for (uint256 i = 0; i < funders.length; i++) {
+            s_funds[funders[i]] = 0;
+        }
+        s_funders = new address[](0);
+        (bool success, ) = i_owner.call{value: address(this).balance}("");
+        require(success, "Withdrawal failed");
     }
 
     receive() external payable {}
