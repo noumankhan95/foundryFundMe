@@ -11,11 +11,11 @@ contract DeployContract is Script {
         returns (Fundme fundme, HelperConfig helperConfig)
     {
         helperConfig = new HelperConfig();
-        vm.startBroadcast();
+        // vm.startBroadcast();
         fundme = new Fundme(
             AggregatorV3Interface(helperConfig.getConfig().priceFeed)
         );
-        vm.stopBroadcast();
+        // vm.stopBroadcast();
     }
 
     function run() external returns (Fundme, HelperConfig) {

@@ -4,21 +4,21 @@ import {Fundme} from "../../src/Fundme.sol";
 import {Test} from "forge-std/Test.sol";
 import {HelperConfig} from "../../script/HelperConfig.s.sol";
 import {AggregatorV3Interface} from "lib/chainlink-brownie-contracts/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
+import {DeployContract} from "../../script/DeployContract.s.sol";
 
 contract TestFundMe is Test {
     Fundme public fundme;
     HelperConfig public helperConfig;
+    DeployContract deployer;
 
     function setUp() public {
-        helperConfig = new HelperConfig();
-        fundme = new Fundme(
-            AggregatorV3Interface(helperConfig.getConfig().priceFeed)
-        );
+        deployer = new DeployContract();
+        (fundme, helperConfig) = deployer.run();
         vm.deal(address(this), 10 ether);
     }
 
     function testOwner() public {
-        assertEq(fundme.getOwner(), address(this));
+        assertEq(fundme.getOwner(), address(deployer));
     }
 
     function testMinAmount() public {
