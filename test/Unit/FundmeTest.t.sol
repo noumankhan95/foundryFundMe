@@ -33,4 +33,16 @@ contract TestFundMe is Test {
         (bool success, ) = address(fundme).call{value: 0.5 ether}("");
         assertEq(address(fundme).balance, 0.5 ether);
     }
+
+    function testUserisFirstFunder() public {
+        address user = makeAddr("User");
+        vm.deal(user, 10 ether);
+        vm.prank(user);
+        (bool success, ) = address(fundme).call{value: 1 ether}(
+            abi.encodeWithSignature("startfundMe()")
+        );
+        address firstFunder = fundme.getFunder(0);
+
+        assert(firstFunder == user);
+    }
 }

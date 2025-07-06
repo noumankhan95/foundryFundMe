@@ -30,6 +30,7 @@ contract Fundme {
 
     function startfundMe() external payable minimumAmount {
         s_funds[msg.sender] += msg.value;
+        s_funders.push(msg.sender);
     }
 
     function withdraw() external payable onlyOwner {
@@ -46,5 +47,9 @@ contract Fundme {
 
     function getOwner() external view returns (address) {
         return i_owner;
+    }
+
+    function getFunder(uint256 index) external view returns (address) {
+        return s_funders[index];
     }
 }
